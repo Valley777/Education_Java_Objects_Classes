@@ -1,51 +1,44 @@
-package Songs;
+package Students;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
 
-        int n = Integer.parseInt(scanner.nextLine());
+        String input = scanner.nextLine();
 
-        List<Song> songs = new ArrayList<>();
+        //Създаваме един празен списък с ученици
+        List<Student> students = new ArrayList<>();
 
-        for (int i = 1; i <= n ; i++) {
+        while (!input.equals("end")){
 
-            //прочитаме от конзолата input, който запазваме в масив -> "favourite_DownTown_3:14" -> ["favourite", "DownTown", "3:14"]
-            String[] data = scanner.nextLine().split("_");
+            String[] currentData = input.split(" ");
 
-            //прочитаме си елементите от масива
-            String typeList = data[0];
-            String name = data[1];
-            String time = data[2];
+            //прочитаме конкретните елементи от масива
+            String firstName = currentData[0];
+            String lastName = currentData[1];
+            int age = Integer.parseInt(currentData[2]);
+            String homeTown = currentData[3];
 
-            //създаваме празен обект от класа Song
-            Song currentSong = new Song();//typeList, name, time
+            //създаваме обект от клас Student -> firstName, lastName, age, homeTown
+            Student currentStudent = new Student(firstName, lastName, age, homeTown);
 
-            //задаваме стойности на полетата от обекта спрямо прочетения инпут
+            //към списъка с ученици добавяме нашия текущ ученик
+            students.add(currentStudent);
 
-            //ако нямаме конструктор
-            currentSong.setTypeList(typeList);
-            currentSong.setName(name);
-            currentSong.setTime(time);
-
-            songs.add(currentSong);
-
+            input = scanner.nextLine();
         }
 
-        String typeListToShow = scanner.nextLine();
+        String filterTown = scanner.nextLine();
 
-        if(typeListToShow.equals("all")){
-            for(Song song : songs){
-                System.out.println(song.getName());
-            }
-        }else {
-            for (Song song : songs){
-                if(song.getTypeList().equals(typeListToShow)){
-                    System.out.println(song.getName());
-                }
+        for (Student student : students){
+
+            if (student.getHometown().equals(filterTown)){
+                System.out.printf("%s %s is %d years old%n", student.getFirstName(), student.getLastName(), student.getAge());
             }
         }
 
